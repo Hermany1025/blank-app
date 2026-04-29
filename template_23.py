@@ -1,174 +1,204 @@
 import streamlit as st
+import st_yled
+import json
 from openai import OpenAI
-import time
+import random
 
-# ============================================================
-# Define all variables here
-# ============================================================
-client = OpenAI(
-    api_key = st.secrets["OPENAIKEY"]
-)
+st_yled.init()
+client = OpenAI(api_key=st.secrets["OPENAIKEY"])
+# GLOBAL CONTAINER
+PRIMARY = "#E42121"
+SECONDARY = "#3567FF"
+TERTIARY= "#FFF700"
+QUATERNARY= "#FF9500"
+GRAY = "#535353"
+GREEN = "#E4F6B3"
+st_yled.set("button", "background_color", GREEN)
+st_yled.set("write", "font_size", "20px")
+# st_yled.set("write", "color", GREEN)
+# ---------- SESSION STATE ----------
+defaults = {
+    "user": "",
+    "start": False,
+    "chat_history": [],
+    "last_response": None
+}
+for k, v in defaults.items():
+    if k not in st.session_state:
+        st.session_state[k] = v
 
-with st.form ("Form"):
-    debater_A = st.text_input("Choose a debater of a character: ", key = "1")
-    debater_B = st.text_input("Choose a debater of a character: ", key = "2")
-    trait_1 = st.text_input(debater_A + "'s trait", key = "3")
-    trait_2 = st.text_input(debater_B + "'s trait", key = "4")
-    style1 = st.text_input(debater_A + "'s trait", key = "5")
-    style2 = st.text_input(debater_B + "'s trait", key = "6")
-    topic = st.text_input("Coose a topic: ", key = "7")
-    submit = st.form_submit_button("TIMBUS")
-if submit:
-    if (debater_A or debater_B or trait_1 or trait_2 or style1 or style2 or topic) == "":
-        st.error("Missing Info?")
-    else:
-        A_prompt = f'''
-        You are {debater_A}, a democracy debater.
-        You are arguing {debater_B} the topic: {topic}.
-        Your debate style is ***casual***.
-        Follow these rules:
-        - Present logical arguments with supporting evidence
-        - Directly address points made by your opponent
-        - Stay on topic and maintain your position
-        - Use ***casual*** tone in your responses
-        - Keep responses between 3-5 sentences
-        - Do not concede your position, but acknowledge valid counterpoints
-        Each response should include:
-        - A main argument or counterargument
-        - Supporting reasoning or evidence
-        - A question or challenge to your opponent
+# ---------- UI ----------
+
+
+# Create a container with a custom background and text color using markdown
+
+# AI-assisted styling:
+with st_yled.container():
+    st.markdown(
         '''
-        B_prompt = f'''
-        You are {debater_B}, a communism debater.
-        You are arguing {debater_A} the topic: {topic}.
-        Your debate style is ***formal***.
-        Follow these rules:
-        - Present logical arguments with supporting evidence
-        - Directly address points made by your opponent
-        - Stay on topic and maintain your position
-        - Use ***formal*** tone in your responses
-        - Keep responses between 3-5 sentences
-        - Do not concede your position, but acknowledge valid counterpoints
-        Each response should include:
-        - A main argument or counterargument
-        - Supporting reasoning or evidence
-        - A question or challenge to your opponent
-        '''
-
-        # hello
-
-        # Store debate rounds
-        debate_rounds = []
-
-        # ============================================================
-        # Create opening statements / start debate history / add to history
-        # ============================================================
-        # Create person A chat history
-        chat_history_A = [
-            {"role": "system", "content": A_prompt},
-            {"role": "user", "content": f"Give your opening statement on: {topic}"}
-        ]
-        # Generate person A opening statements
-        response_A = client.chat.completions.create(
-            model="gpt-4o",
-            messages=chat_history_A
-        )
-        # Adding what person A said to their history
-        message_A = response_A.choices[0].message.content
-        chat_history_A.append({"role": "assistant", "content": message_A})
-
-        # Create person B chat history
-        chat_history_B = [
-            {"role": "system", "content": B_prompt},
-            {"role": "user", "content": f"The topic is: {topic}. Your opponent says: {message_A}. Respond with your opening statement."}
-        ]
-        # Generate person B opening statements
-        response_B = client.chat.completions.create(
-            model="gpt-4o",
-            messages=chat_history_B
-        )
-        # Adding what person B said to their history
-        message_B = response_B.choices[0].message.content
-        chat_history_B.append({"role": "assistant", "content": message_B})
-
-        # Conduct 3 rounds of rebuttals hp
-        # NOTE - You need to add what the other character said within the user_prompt so the characters know what their opponent replied with
-        st.write(f"\n{'='*60}")
-        st.write(f"Opening Statement")
-        st.write(f"{'='*60}\n")
-        chat_history_A.append({"role": "user", "content": "{debater_A} said this for their opening statement: {response_A.choices[0].message.content} \n Please provide your opening statement of your debate with Mao Zedong. Like how you greet a person when you guys first met."})
-        response_A = client.chat.completions.create(
-            model="gpt-4o",
-            messages=chat_history_A
-        )
-            
-        chat_history_A.append({"role": "assistant", "content": response_A.choices[0].message.content})
-        st.write(debater_A)
-        st.write(response_A.choices[0].message.content)
+        <style>
+        .custom-container {
+            background-color: #535353;
+            padding: 10px;
+            border-radius: 3px;
+        }
+        .custom-container p {
+            color: #E42121;
+            font-size: 24px;
+            font-weight: bold;
+        }
+        .custom-container e {
+            color: #3567FF;
+            font-size: 20px;
+            font-weight: bold;
+        }
+        .custom-container t {
+            color: #FF9500;
+            font-size: 10px;
+            font-weight: bold;
+        }
+        </style>
         
+        <!-- Dungeon Crawler Title -->
+        <div class="custom-container">
+            <p>HERMANY'S DUNGEON CRAWLER</p>
+        </div>
+        
+        <!-- Template -->
+        <div class="custom-container">
+            <e>Template_23</e>
+        </div>
 
-        chat_history_B.append({"role": "user", "content": "{debater_B} said this for their opening statement: {response_B.choices[0].message.content} \n Please provide your opening statement of your debate with Mac Arthur. Like how you greet a person when you guys first met."})
-        response_B = client.chat.completions.create(
-            model="gpt-4o",
-            messages=chat_history_B
-        )
-            
-        chat_history_B.append({"role": "assistant", "content": response_B.choices[0].message.content})
-        st.write(debater_B)
-        st.write(response_B.choices[0].message.content)
-        for round_num in range(1, 4):
-            st.write(f"\n{'='*60}")
-            st.write(f"ROUND {round_num}")
-            st.write(f"{'='*60}\n")
-            
-            # YOUR CODE HERE: 
-            # 1. Generate Debater A's rebuttal w/ Debater B's opening statement included in prompt
-            chat_history_A.append({"role": "user", "content": "{debater_A} said this for their statement: {response_A.choices[0].message.content} \n Please provide your rebuttal for this statement"})
-            response_A = client.chat.completions.create(
-                model="gpt-4o",
-                messages=chat_history_A
+        <!-- Copyright -->
+        <div class="custom-container">
+            <t>All Copywrite belonged to Hermany, Chinmany Seimens complany. "https://Chinmany_Seimens/Hermanys_Dungeon_Crawler_Game_template_23.cn.com"
+        </div>
+        ''',
+        unsafe_allow_html=True
+    )
+    # st_yled.title("HERMANY'S DUNGEON CRAWLER", color=PRIMARY)
+    # st_yled.subheader("Template_23", color = TERTIARY)
+    # st_yled.write("All Copywrite belonged to Hermany, Chinmany Seimens complany. https://Chinmany_Seimens/Hermanys_Dungeon_Crawler_Game_template_23.cn.com", color = SECONDARY)
+
+    
+    col1, col2 = st.columns(2)
+with col1:
+    st_yled.badge_card_one(
+        badge_text="Template_24",
+        badge_icon=":material/square:",
+        title="HEMANY'S DUNGEON CRAWLER",
+        text="DUNGEON CRAWLER SETTING IN A MIDDLE SCHOOL"
+    )
+with col2:
+    st_yled.badge_card_one(
+        badge_text="Author's Note",
+        badge_icon=":material/circle:",
+        title="Author:",
+        text="HERMAN HU"
+    )
+
+st.subheader("Game")
+st.divider()
+
+# ---------- FORM ----------
+with st.form("form"):
+    name_input = st.text_input("Enter your name")
+    submitted = st_yled.form_submit_button("START", color = SECONDARY, background_color = GRAY)
+# AI-assisted styling:
+if submitted:
+    if not name_input.strip():
+        st.error("Please enter a name")
+    else:
+        st.session_state.user = name_input
+        st.session_state.start = True
+
+        # Initialize chat ONLY ONCE
+        st.session_state.chat_history = [{
+            "role": "system",
+            "content": (
+                "You are a dungeon game master.\n"
+                "Return ONLY valid JSON.\n"
+                "Format:\n"
+                "{"
+                "\"Description\": \"string\","
+                "\"Choices\": [\"1. ...\", \"2. ...\", \"3. ...\"]"
+                "}\n"
+                "Setting: School. A dragon is trying to kidnap middle schoolers."
             )
-            # 2. Add to Debater A's history
-            chat_history_A.append({"role": "assistant", "content": response_A.choices[0].message.content})
-            st.write(debater_A)
-            st.write(response_A.choices[0].message.content)
-            # 3. Generate Debater B's response w/ Debater A's rebuttal included in propmt
-            chat_history_B.append({"role": "user", "content": "{debater_B} said this for their statement: {response_B.choices[0].message.content} \n Please provide your rebuttal for this statement"})
-            response_B = client.chat.completions.create(
-                model="gpt-4o",
-                messages=chat_history_B
-            )
-            # 4. Add to Debater B's history
-            chat_history_B.append({"role": "assistant", "content": response_B.choices[0].message.content})
-            st.write(debater_B)
-            st.write(response_B.choices[0].message.content)
-            time.sleep(1)
-            
-        # YOUR CODE HERE: Generate closing statements for both debaters
-            
-        st.write(f"\n{'='*60}")
-        st.write(f"Closing Statement")
-        st.write(f"{'='*60}\n")
-        chat_history_A.append({"role": "user", "content": "{debater_A} said this for their ending statement: {response_A.choices[0].message.content} \n Please provide your ending statement of your debate with Mao Zedong. Like how you say good bye to a person when you guys are about to leave."})
-        response_A = client.chat.completions.create(
-            model="gpt-4o",
-            messages=chat_history_A
+        }]
+
+# ---------- FUNCTION ----------
+# AI-assisted styling:
+def get_ai_response():
+    response = client.chat.completions.create(
+        model="gpt-4o",
+        messages=st.session_state.chat_history
+    )
+
+    raw = response.choices[0].message.content
+
+    try:
+        parsed = json.loads(raw)
+        st.session_state.last_response = parsed
+        st.session_state.chat_history.append(
+            {"role": "assistant", "content": raw}
         )
-            
-        chat_history_A.append({"role": "assistant", "content": response_A.choices[0].message.content})
-        st.write(debater_A)
-        st.write(response_A.choices[0].message.content)
+    except json.JSONDecodeError:
+        st.error("AI returned invalid JSON. Try again.")
+        st.write(raw)
 
-        chat_history_B.append({"role": "user", "content": "{debater_B} said this for their ending statement: {response_B.choices[0].message.content} \n Please provide your ending statement of your debate with Mac Arthur. Like how you say good bye to a person when you guys are about to leave."})
-        response_B = client.chat.completions.create(
-            model="gpt-4o",
-            messages=chat_history_B
+# ---------- GAME START ----------
+if st.session_state.start:
+
+    st_yled.write(f"Welcome {st.session_state.user}")
+
+    # First response
+    if not st.session_state.last_response:
+        st.session_state.chat_history.append(
+            {"role": "user", "content": f"My name is {st.session_state.user}"}
         )
+        get_ai_response()
+
+    # Display response
+    # ST_YLED WEBSITE-assisted styling:
+    with st_yled.container(
+    background_color="#f8f9fa",
+    border_color="#dee2e6",
+    padding="20px"
+    ):
+        # st_yled.text("Content inside styled container")
+        if st.session_state.last_response:
+            data = st.session_state.last_response
             
-        chat_history_B.append({"role": "assistant", "content": response_B.choices[0].message.content})
-        st.write(debater_B)
-        st.write(response_B.choices[0].message.content)
+            st_yled.write(data.get("Description", ""))
+    # ST_YLED WEBSITE-assisted styling:
+    with st_yled.container(
+    background_color="#f8f9fa",
+    border_color="#dee2e6",
+    padding="20px"
+    ):
+            choices = data.get("Choices", [])
 
-        # Finished
+            # Buttons
+            cols = st.columns(3)
+            for i, choice in enumerate(choices):
+                with cols[i]:
+                    if st_yled.button(choice):
+                        st.session_state.chat_history.append({
+                            "role": "user",
+                            "content": f"I choose option {i+1}. Continue the game."
+                        })
+                        st.session_state.last_response = None
+                        st.rerun()
 
-        # Mac Arhur(Casusal Debater) and Mao Zedong (Formal Debater) was debating about which country is better in the years of 1950s.
+
+
+
+# Application description
+# 1. This Dungeon Crawler application was a game application with the association with OpenAI. This application is a game application mainly theme was Dungeon Crawler, the setting was a Middle School.
+# 2. This application requires the user to first put in their name, then press TRATS or start. Then the OpenAI would provide the game information. Then based on the game description, choose one of the three choices provided to continue the game, after each round the description will refresh and generate a new description based on your choices.
+# Reflection
+# 1. There were many errors that I faced, for example, everytime that the user needs to enter there name to continue one round of a game everytime, but now use condition check, user can continue their game as many rounds as they want, until they leanve the game. Also the st_yled issues, style problems for me were background color with color in buttons write and many functions. Also I sometimes fail to visualise my theme color and theme in my game, those colors and visualizations were hard.
+# 2. ST_YLED was super hard for me, especially those containers and global styling, it hard to add variables to containers, and the format of setting up container was first confusing, but slowly I get it. I mean styled is a good tool to visualize my Dungeon Crawler, but it is hard for me to combine colors with other colors, all does colors, font and border radius, was hard for me to visualize and convey theme in my Dungeon Crawler, I have litrally no inspirations, I can only use red, yellow, and orange, to convey theme, through fire, red, yellow, more fire, and orange, lava.
+# 3. For ST_YLED I chose red, yellow, and orange for my main colors to visualize and convey my theme, these represent, fire, and lava. I can't think of any new colors. And also, I don't know anything about styling in styled, all I know is font size, color, background color, and padding, and border radius.
+# BASICALLY MY WHOLE CODE WAS REVISED USING CHAT GPT BUT THE BASIC STRUCTURE WAS HERMAN MADE.
