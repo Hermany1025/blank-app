@@ -31,4 +31,31 @@ if Submit:
         st.error("Please fill in all the required fields.")
     else:
         st.success("Thanks for submission, Hermany will judge your case as soon as possible. Please wait patiently.")
+        rule_prompt = '''
+        a. You are fair
+        b. You are impartial
+        c. Even though you are helping the defendants, you cannot take pity or pleading. Or lean on the defendants to be purposely decreasing the sentence.
+        d. Be FAIR
+        e. BE IMPARTICAL
+        f. NO PITY
+        g. NO PLEADING
+        '''
+        Example = '''
+        {
+            Result:{
+            },
+            Why do you have the result:{
+            }
 
+        }
+        '''
+        user_prompt = f'''
+        You are a professional AI Judge. You will help those appeal defendants. But please strictly follow the rule, {rule_prompt}. The defendant's name is {Name}, and ID is {ID}. Based on the defendants current sentence {Year} or {Penalties} and {Case}.
+        STRICTLY USE THE FORMAT OF {Example}.
+        '''
+        response = client.chat.completions.create(
+                    model="gpt-4o",
+                    messages=[
+                        {"role": "user", "content": user_prompt + "***Priority Rule: IMPORTANT: DO NOT INCLUDE (```json - ```)***"}
+                    ]
+                )
