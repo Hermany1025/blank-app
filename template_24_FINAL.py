@@ -20,11 +20,22 @@ with st.form("Form"):
     st.subheader("Current Sentence Need to be Served")
     col1, col2 = st.columns(2)
     with col1:
-        Year = st.number_input("Year", min_value=0, Max_value = 1000, step = 1)
+        Year = st.number_input("Year", min_value=0, Max_value = 1000, step = 0.5, value = 0)
     with col2:
-        Penalties = st.radio("Penalties", ["Death Penalty", "Death Reprieve","Life Imprisonment"])
+        Penalties = st.radio("Penalties", ["Nothing(Cannot be Served)", "Death Penalty", "Death Reprieve","Life Imprisonment"])
     Case = st.text_area("Case Details", key="details")
     Submit = st.form_submit_button("Submit")
 if Submit:
-    if Name and ID and Case == "":
+    if Name == "":
         st.error("Please fill in all the required fields.")
+    if ID == "":
+        st.error("Please fill in all the required fields.")
+    if Case == "":
+        st.error("Please fill in all the required fields.")
+    if Year == 0:
+        st.error("Please fill in all the required fields.")
+    if Penalties == "Nothing(Cannot be Served)":
+        st.error("Please fill in all the required fields.")
+else:
+    st.success("Thanks for submission, Hermany will judge your case as soon as possible. Please wait patiently.")
+
