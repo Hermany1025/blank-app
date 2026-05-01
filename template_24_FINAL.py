@@ -20,7 +20,7 @@ with st.form("Form"):
     st.subheader("Current Sentence Need to be Served")
     col1, col2 = st.columns(2)
     with col1:
-        Penalties = st.radio("Penalties", ["Nothing(Cannot be Served)", "Death Penalty", "Death Reprieve","Life Imprisonment", "Year Imprisonment"])
+        Penalties = st.radio("Penalties", ["Nothing(Cannot be Served)", "Death Penalty", "Death Reprieve","Life Imprisonment", "Year Imprisonment", "No PENALTIES"])
     
     with col2:
         Year = st.number_input("Year", min_value=0.0, max_value = 10000.0, step = 0.5, value = 9178.0)
