@@ -23,7 +23,7 @@ with st.form("Form"):
         Penalties = st.radio("Penalties", ["Nothing(Cannot be Served)", "Death Penalty", "Death Reprieve","Life Imprisonment", "Year Imprisonment"])
     
     with col2:
-        Year = st.number_input("Year", min_value=0.0, max_value = 1000.0, step = 0.5, value = 9178.0)
+        Year = st.number_input("Year", min_value=0.0, max_value = 10000.0, step = 0.5, value = 9178.0)
     Case = st.text_area("Case Details", key="details")
     Submit = st.form_submit_button("Submit")    
 if Submit:
