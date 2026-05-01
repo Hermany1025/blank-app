@@ -13,6 +13,8 @@ client = OpenAI(
     api_key = st.secrets["OPENAIKEY"]
 )
 dictionary = {}
+if "Output" not in st.session_state:
+     st.session_state.Output = {}
 Add = st.button("Add new defendants")
 Search = st.button("Search through Name or ID")
 if Add:
@@ -64,27 +66,27 @@ if Add:
                     )
             # st.write(response.choices[0].message.content)
             # st.write("\n\n",response.choices[0].message.content)
-            Output = json.loads(response.choices[0].message.content)
+            st.session_state.Output = json.loads(response.choices[0].message.content)
             # st.write(st.session_state.output)
-            Output[Name] = Output
-            dictionary = Output
+            st.session_state.Output[Name] = st.session_state.Output
+            dictionary = st.session_state.Output
             col1, col2 = st.columns(2)
             with col1:
                 st.subheader("Result")
-                st.write(Output["Result"])
+                st.write(st.session_state.Output["Result"])
             with col2:
                 st.subheader("Why do you have the result")
-                st.write(Output["Why do you have the result"])
+                st.write(st.session_state.Output["Why do you have the result"])
 if Search:
-    if len(Output) == 0:
+    if len(st.session_state.Output) == 0:
             st.error("There is no wrongly convicted case in the database, please add new defendants to the database.")
     else:
         search_query = st.text_input("Search by Name or ID")
         if search_query:
-            if search_query in Output:
+            if search_query in st.session_state.Output:
                 st.subheader("Result")
-                st.write(Output[search_query]["Result"])
+                st.write(st.session_state.Output[search_query]["Result"])
                 st.subheader("Why do you have the result")
-                st.write(Output[search_query]["Why do you have the result"])
+                st.write(st.session_state.Output[search_query]["Why do you have the result"])
             else:
                 st.error("No results found for the given Name or ID.")
