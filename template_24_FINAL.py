@@ -67,7 +67,6 @@ if Add:
             # st.write(response.choices[0].message.content)
             # st.write("\n\n",response.choices[0].message.content)
             st.session_state.Output = json.loads(response.choices[0].message.content)
-            st.write(st.session_state.Output)
             st.session_state.Output[Name] = st.session_state.Output
             dictionary = st.session_state.Output
             col1, col2 = st.columns(2)
@@ -79,6 +78,7 @@ if Add:
                 st.write("gdygyd")
                 # st.subheader("Why do you have the result")
                 # st.write(st.session_state.Output["Why do you have the result"])
+st.write(st.session_state.Output)
 if Search:
     if len(st.session_state.Output) == 0:
             st.error("There is no wrongly convicted case in the database, please add new defendants to the database.")
