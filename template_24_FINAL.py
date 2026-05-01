@@ -23,11 +23,11 @@ with st.form("Form"):
         Penalties = st.radio("Penalties", ["Nothing(Cannot be Served)", "Death Penalty", "Death Reprieve","Life Imprisonment", "Year Imprisonment"])
     
     with col2:
-        Year = st.number_input("Year", min_value=0.0, max_value = 1000.0, step = 0.5, value = 0.0)
+        Year = st.number_input("Year", min_value=0.0, max_value = 1000.0, step = 0.5, value = -0.0)
     Case = st.text_area("Case Details", key="details")
     Submit = st.form_submit_button("Submit")    
 if Submit:
-    if Name == "" or ID == "" or Case == "" or Penalties == "Nothing(Cannot be Served)":
+    if Name == "" or ID == "" or Case == "" or Year == -0.0 or Penalties == "Nothing(Cannot be Served)":
         st.error("Please fill in all the required fields.")
     else:
         st.success("Thanks for submission, Hermany will judge your case as soon as possible. Please wait patiently.")
