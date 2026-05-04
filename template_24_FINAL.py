@@ -29,7 +29,7 @@ with st.form("Form"):
     Case = st.text_area("Case Details If searching for a specific case type ===Search or search===", key="details")
     Submit = st.form_submit_button("Submit")    
 if Submit:
-    if Name == "" or ID == "" or Case == "" or not (Penalties == "Nothing(Cannot be Served)" and Year > 0.0):
+    if Name == "" or ID == "" or Case == "" or not (Penalties == "Year Imprisonment" and Year > 0.0):
         st.error("Please fill in all the required fields.")
     else:
         st.success("Thanks for submission, Hermany will judge your case as soon as possible. Please wait patiently.")
