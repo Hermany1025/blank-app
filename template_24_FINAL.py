@@ -26,7 +26,7 @@ with st.form("Form"):
     
     with col2:
         Year = st.number_input("Year", min_value=0.0, max_value = 10000.0, step = 0.5, value = 0.0)
-    Case = st.text_area("Case Details If searching for a specific case type ===Search or search===", key="details")
+    Case = st.text_area("Case Details If searching for a specific case type", key="details")
     Submit = st.form_submit_button("Submit")    
 if Submit:
     if Name == "" or ID == "" or Case == "" or not (Penalties == "Year Imprisonment" and Year > 0.0):
@@ -74,19 +74,23 @@ if Submit:
             st.subheader("Result")
             st.write(st.session_state.Output["Result"])
 # st.write(st.session_state.Output)
-if Name == "Search" or Name == "search" or ID == "Search" or ID == "search" or Penalties == "Search" or Penalties == "search" and Year == 0.00 or Case == "Search" or Case == "search":
-    if len(st.session_state.Output) == 0:
-            st.error("There is no wrongly convicted case in the database, please add new defendants to the database.")
-    else:
-        search_query = st.text_input("Search by Name or ID")
-        if search_query:
-            if search_query in st.session_state.Output:
-                col1, col2 = st.columns(2)
-                with col1:
-                    st.subheader("Why do you have the result")
-                    st.write(st.session_state.Output[search_query]["Why do you have the result"])
-                with col2:
-                    st.subheader("Result")
-                    st.write(st.session_state.Output[search_query]["Result"])
-            else:
-                st.error("No results found for the given Name or ID.")
+with st.sidebar:
+    st.header("Pages")
+if len(st.session_state.Output) == 0:
+    st.error("There is no wrongly convicted case in the database, please add new defendants to the database.")
+    btn1 = st.button("Add New Defendant")
+    btn2 = st.button("Search by Name or ID")
+    page = st.selectbox("Select a page", ["Add New Defendant", "Search by Name or ID"])
+else:
+    search_query = st.text_input("Search by Name or ID")
+    if search_query:
+        if search_query in st.session_state.Output:
+            col1, col2 = st.columns(2)
+            with col1:
+                st.subheader("Why do you have the result")
+                st.write(st.session_state.Output[search_query]["Why do you have the result"])
+            with col2:
+                st.subheader("Result")
+                st.write(st.session_state.Output[search_query]["Result"])
+        else:
+            st.error("No results found for the given Name or ID.")
