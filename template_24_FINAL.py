@@ -68,13 +68,13 @@ if Submit:
         dictionary = st.session_state.Output
         col1, col2 = st.columns(2)
         with col1:
-            st.subheader("Result")
-            st.write(st.session_state.Output["Result"])
-        with col2:
             st.subheader("Why do you have the result")
             st.write(st.session_state.Output["Why do you have the result"])
-st.write(st.session_state.Output)
-if Case == "Search" or Case == "search":
+        with col2:
+            st.subheader("Result")
+            st.write(st.session_state.Output["Result"])
+# st.write(st.session_state.Output)
+if Name == "Search" or Name == "search" or ID == "Search" or ID == "search" or Penalties == "Search" or Penalties == "search" and Year == 0.00 or Case == "Search" or Case == "search":
     if len(st.session_state.Output) == 0:
             st.error("There is no wrongly convicted case in the database, please add new defendants to the database.")
     else:
