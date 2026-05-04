@@ -61,20 +61,18 @@ if Submit:
                         {"role": "user", "content": user_prompt}
                     ]
                 )
-        # st.write(response.choices[0].message.content)
-        # st.write("\n\n",response.choices[0].message.content)
+        st.write(response.choices[0].message.content)
+        st.write("\n\n",response.choices[0].message.content)
         st.session_state.Output = json.loads(response.choices[0].message.content)
         st.session_state.Output[Name] = st.session_state.Output
         dictionary = st.session_state.Output
         col1, col2 = st.columns(2)
         with col1:
-            # st.subheader("Result")
-            # st.write(st.session_state.Output["Result"])
-            st.write("sgdydg")
+            st.subheader("Result")
+            st.write(st.session_state.Output["Result"])
         with col2:
-            st.write("gdygyd")
-            # st.subheader("Why do you have the result")
-            # st.write(st.session_state.Output["Why do you have the result"])
+            st.subheader("Why do you have the result")
+            st.write(st.session_state.Output["Why do you have the result"])
 st.write(st.session_state.Output)
 if Case == "Search" or Case == "search":
     if len(st.session_state.Output) == 0:
@@ -86,11 +84,9 @@ if Case == "Search" or Case == "search":
                 col1, col2 = st.columns(2)
                 with col1:
                     st.subheader("Why do you have the result")
-                    st.write("HEYHEY")
-                    # st.write(st.session_state.Output[search_query]["Why do you have the result"])
+                    st.write(st.session_state.Output[search_query]["Why do you have the result"])
                 with col2:
                     st.subheader("Result")
-                    st.write("RESULT")
-                    # st.write(st.session_state.Output[search_query]["Result"])
+                    st.write(st.session_state.Output[search_query]["Result"])
             else:
                 st.error("No results found for the given Name or ID.")
