@@ -14,7 +14,14 @@ client = OpenAI(
 )
 dictionary = {}
 if "Output" not in st.session_state:
-     st.session_state.Output = {}
+    st.session_state.Output = {}
+
+with st.sidebar:
+    st.header("Pages")
+    btn1 = st.button("Add New Defendant", use_container_width=True)
+    btn2 = st.button("Search by Name or ID", use_container_width=True)
+    page = st.selectbox("Select a page", ["Add New Defendant", "Search by Name or ID"])
+
 with st.form("Form"):
     st.title("Welcome to Hermany's AI Judge Template_24_Final")
     Name = st.text_input("Your Legal Name", key="name")
@@ -78,9 +85,6 @@ with st.sidebar:
     st.header("Pages")
 if len(st.session_state.Output) == 0:
     st.error("There is no wrongly convicted case in the database, please add new defendants to the database.")
-    btn1 = st.button("Add New Defendant")
-    btn2 = st.button("Search by Name or ID")
-    page = st.selectbox("Select a page", ["Add New Defendant", "Search by Name or ID"])
 else:
     search_query = st.text_input("Search by Name or ID")
     if search_query:
