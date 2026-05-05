@@ -81,8 +81,6 @@ if Submit:
             st.subheader("Result")
             st.write(st.session_state.Output["Result"])
 # st.write(st.session_state.Output)
-with st.sidebar:
-    st.header("Pages")
 if len(st.session_state.Output) == 0:
     st.error("There is no wrongly convicted case in the database, please add new defendants to the database.")
 else:
