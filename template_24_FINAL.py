@@ -17,9 +17,9 @@ if "Output" not in st.session_state:
 if "dictionary" not in st.session_state:
     st.session_state.dictionary = {}
 if "btn1" not in st.session_state:
-    st.session_state.btn1 = False
+    st.session_state.btn1 = ""
 if "btn2" not in st.session_state:
-    st.session_state.btn2 = False
+    st.session_state.btn2 = ""
 if "Name" not in st.session_state:
     st.session_state.Name = ""
 if "ID" not in st.session_state:
@@ -67,9 +67,11 @@ dictionary = {}
 
 with st.sidebar:
     st.header("Pages")
-    st.session_state.btn1 = st.button("Add New Defendant", use_container_width=True)
-    st.session_state.btn2 = st.button("Search by Name or ID", use_container_width=True)
-if st.session_state.btn1:
+    if st.button("Add New Defendant", use_container_width=True):
+        st.session_state.btn1 = "Add New Defendant"
+    if st.button("Search by Name or ID", use_container_width=True):
+        st.session_state.btn2 = "Search by Name or ID"
+if st.session_state.btn1 == "Add New Defendant":
     with st.form("Form"):
         st.title("Welcome to Hermany's AI Judge Template_24_Final")
         st.session_state.Name = st.text_input("Your Legal Name", key="name")
@@ -130,7 +132,7 @@ if st.session_state.btn1:
                 st.subheader("Result")
                 st.write(st.session_state.Output["Result"])
     # st.write(st.session_state.Output)
-if st.session_state.btn2:
+if st.session_state.btn2 == "Search by Name or ID":
     if len(st.session_state.Output) == 0:
         st.error("There is no wrongly convicted case in the database, please add new defendants to the database.")
     else:
