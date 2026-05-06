@@ -82,8 +82,8 @@ if st.session_state.btn1:
         with col2:
             st.session_state.Year = st.number_input("Year", min_value=0.0, max_value = 10000.0, step = 0.5, value = 0.0)
         st.session_state.Case = st.text_area("Case Details If searching for a specific case type", key="details")
-        Submit = st.form_submit_button("Submit")    
-    if Submit:
+        st.session_state.Submit = st.form_submit_button("Submit")    
+    if st.session_state.Submit:
         st.write("Hitler is coming, Hermany is judging your case, please wait patiently.")
         if st.session_state.Name == "" or st.session_state.ID == "" or st.session_state.Case == "" or not (st.session_state.Penalties == "Year Imprisonment" and st.session_state.Year > 0.0):
             st.error("Please fill in all the required fields.")
