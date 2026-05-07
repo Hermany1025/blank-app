@@ -159,11 +159,11 @@ if st.session_state.page == "Add New Defendant":
                 # Keep Output updated too
                 st.session_state.Output = st.session_state.dictionary
 
-                st.subheader("Pure Text JSON")
-                st.code(
-                    json.dumps(parsed_output, indent=4, ensure_ascii=False),
-                    language="json"
-                )
+                # st.subheader("Pure Text JSON")
+                # st.code(
+                #     json.dumps(parsed_output, indent=4, ensure_ascii=False),
+                #     language="json"
+                # )
 
                 col1, col2 = st.columns(2)
 
