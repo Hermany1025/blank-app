@@ -191,8 +191,8 @@ if st.session_state.btn1 == "Add New Defendant":
 
             pure_text_JSON = st.session_state.response.choices[0].message.content
 
-            st.subheader("Pure Text JSON")
-            st.code(pure_text_JSON, language="json")
+            # st.subheader("Pure Text JSON")
+            # st.code(pure_text_JSON, language="json")
 
             try:
                 st.session_state.Output = json.loads(pure_text_JSON)
