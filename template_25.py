@@ -117,7 +117,7 @@ if st.session_state.btn1 == "Add New Defendant":
 
         with col2:
             st.session_state.Year = st.number_input(
-                "Year",
+                "Year(if applicable)",
                 min_value = 0.0,
                 max_value = 10000.0,
                 step = 0.5,
@@ -248,12 +248,12 @@ if st.session_state.btn2 == "Search by Name or ID":
                 st.success("Case found.")
 
                 st.write("Name:", record["Name"])
-                st.write("ID:", record["ID"])
+                st.write("ID:", str(record["ID"]))
                 st.write("Penalty:", record["Penalty"])
-                st.write("Year:", record["Year"])
+                st.write("Year:", str(record["Year"]))
 
-                st.subheader("Pure Text JSON")
-                st.code(json.dumps(output, indent=4), language="json")
+                # st.subheader("Pure Text JSON")
+                # st.code(json.dumps(output, indent=4), language="json")
 
                 col1, col2 = st.columns(2)
 
