@@ -202,9 +202,9 @@ elif st.session_state.page == "Search by Name or ID":
                 st.success("Case found.")
 
                 st.write("Name:", record["Name"])
-                st.write("ID:", record["ID"])
+                st.write("ID:", str(record["ID"]))
                 st.write("Penalty:", record["Penalty"])
-                st.write("Year:", record["Year"])
+                st.write("Year:", str(record["Year"]))
 
                 st.subheader("Pure Text JSON")
                 st.code(
