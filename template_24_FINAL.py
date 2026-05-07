@@ -131,7 +131,7 @@ if st.session_state.btn1 == "Add New Defendant":
             with col2:
                 st.subheader("Result")
                 st.write(st.session_state.Output["Result"])
-    # st.write(st.session_state.Output)
+    st.write(st.session_state.Output)
 if st.session_state.btn2 == "Search by Name or ID":
     if len(st.session_state.Output) == 0:
         st.error("There is no wrongly convicted case in the database, please add new defendants to the database.")
@@ -142,7 +142,7 @@ if st.session_state.btn2 == "Search by Name or ID":
                 col1, col2 = st.columns(2)
                 with col1:
                     st.subheader("Why do you have the result")
-                    st.write(st.session_state.Output[st.session_state.search_query]["Why do you have the result"])
+                    st.write(st.session_state.Output ["Why do you have the result"])
                 with col2:
                     st.subheader("Result")
                     st.write(st.session_state.Output[st.session_state.search_query]["Result"])
