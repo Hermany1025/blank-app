@@ -178,16 +178,16 @@ if st.session_state.btn1 == "Add New Defendant":
             Do not write anything outside the JSON.
             '''
 
-            st.session_state.response = client.chat.completions.create(
-                model = "gpt-4o",
-                response_format = {"type": "json_object"},
-                messages = [
-                    {
-                        "role": "user",
-                        "content": st.session_state.user_prompt
-                    }
-                ]
-            )
+            # st.session_state.response = client.chat.completions.create(
+            #     model = "gpt-4o",
+            #     response_format = {"type": "json_object"},
+            #     messages = [
+            #         {
+            #             "role": "user",
+            #             "content": st.session_state.user_prompt
+            #         }
+            #     ]
+            # )
 
             pure_text_JSON = st.session_state.response.choices[0].message.content
 
@@ -213,12 +213,13 @@ if st.session_state.btn1 == "Add New Defendant":
 
                 with col1:
                     st.subheader("Why do you have the result")
-                    st.write(st.session_state.Output["Why do you have the result"])
+                    # st.write(st.session_state.Output["Why do you have the result"])
+                    st.write("gheidguyfgewufgwdsui")
 
                 with col2:
                     st.subheader("Result")
-                    st.write(st.session_state.Output["Result"])
-
+                    # st.write(st.session_state.Output["Result"])
+                    st.write("gheidguyfgewufgwdsui")
             except:
                 st.error("The AI did not give valid JSON.")
                 st.write("This is what the AI gave:")
