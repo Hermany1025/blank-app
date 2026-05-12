@@ -9,7 +9,6 @@ st.title("Hermany's Pokemon Gernater")
 st.subheader("Template_24_Final")
 st.write("All Copywrite belonged to Hermany, Chinmany Seimens complany. https://Chinmany_Seimens/Hermanys_AI_Judge_template_24_Final.cn.com")
 st.divider()
-
 client = OpenAI(
     api_key = st.secrets["OPENAIKEY"]
 )
@@ -88,6 +87,8 @@ with st.sidebar:
         st.session_state.btn2 = "Search by Name or ID"
         st.session_state.btn1 = ""
 
+if st.session_state.btn1 == "" and st.session_state.btn2 == "":
+    st.info("Use the side bar on the top left to begin you application adventures.")
 
 # 5 add new defendant
 
