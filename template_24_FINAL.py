@@ -5,7 +5,7 @@ from openai import OpenAI
 
 # 2
 
-st.title("Hermany's Pokemon Gernater")
+st.title("Hermany's AI Judge")
 st.subheader("Template_24_Final")
 st.write("All Copywrite belonged to Hermany, Chinmany Seimens complany. https://Chinmany_Seimens/Hermanys_AI_Judge_template_24_Final.cn.com")
 st.divider()
@@ -60,6 +60,9 @@ if "rule_prompt" not in st.session_state:
             e. BE IMPARTIAL
             f. NO PITY
             g. NO PLEADING
+            h. If the defendants that was not wrongly convicted and have worse cases than should be punishes, like Cases> Punishments. You are able to add punishments to that denfendants.
+            i. Give out the correct result.
+                Like years, or what punishments
             '''
 
 if "Example" not in st.session_state:
@@ -150,6 +153,9 @@ if st.session_state.btn1 == "Add New Defendant":
             e. BE IMPARTIAL
             f. NO PITY
             g. NO PLEADING
+            h. If the defendants that was not wrongly convicted and have worse cases than should be punishes, like Cases> Punishments. You are able to add punishments to that denfendants.
+            i. Give out the correct result.
+                Like years, or what punishments
             '''
 
             st.session_state.Example = '''
@@ -192,8 +198,8 @@ if st.session_state.btn1 == "Add New Defendant":
 
             pure_text_JSON = st.session_state.response.choices[0].message.content
 
-            st.subheader("Pure Text JSON")
-            st.code(pure_text_JSON, language="json")
+            # st.subheader("Pure Text JSON")
+            # st.code(pure_text_JSON, language="json")
 
             try:
                 st.session_state.Output = json.loads(pure_text_JSON)
@@ -215,12 +221,12 @@ if st.session_state.btn1 == "Add New Defendant":
                 with col1:
                     st.subheader("Why do you have the result")
                     st.write(st.session_state.Output["Why do you have the result"])
-                    st.write("gheidguyfgewufgwdsui")
+                    
 
                 with col2:
                     st.subheader("Result")
                     st.write(st.session_state.Output["Result"])
-                    st.write("gheidguyfgewufgwdsui")
+                    
             except:
                 st.error("The AI did not give valid JSON.")
                 st.write("This is what the AI gave:")
