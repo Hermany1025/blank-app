@@ -230,6 +230,8 @@ if st.session_state.btn1 == "Add New Defendant":
                     "Output": st.session_state.Output
                 }
 
+                # stores entry twice, once by name and once with ID
+                # to prevent same ID being put into dictionary, check if ID already exists
                 st.session_state.dictionary[st.session_state.Name.lower()] = defendant_info
                 st.session_state.dictionary[st.session_state.ID.lower()] = defendant_info
 
