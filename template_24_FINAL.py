@@ -1,13 +1,29 @@
 # 1
 import streamlit as st
 import json
+import st_yled
 from openai import OpenAI
 
+st_yled.init()
 # 2
+# GLOBAL CONTAINER
+PRIMARY = "#E42121"
+SECONDARY = "#3567FF"
+TERTIARY= "#FFF700"
+QUATERNARY= "#FF9500"
+GRAY = "#535353"
+GREEN = "#E4F6B3"
+st_yled.set("button", "background_color", GREEN)
+st_yled.set("write", "font_size", "20px")
 
-st.title("Hermany's AI Judge")
-st.subheader("Template_24_Final")
-st.write("All Copywrite belonged to Hermany, Chinmany Seimens complany. https://Chinmany_Seimens/Hermanys_AI_Judge_template_24_Final.cn.com")
+with st_yled.container(
+    background_color = GREEN,
+    border_color = "#E4F6B3",
+    padding = "20px"
+):
+    st_yled.title("Hermany's AI Judge")
+    st_yled.subheader("Template_24_Final")
+st_yled.write("All Copywrite belonged to Hermany, Chinmany Seimens complany. https://Chinmany_Seimens/Hermanys_AI_Judge_template_24_Final.cn.com")
 st.divider()
 client = OpenAI(
     api_key = st.secrets["OPENAIKEY"]
@@ -77,6 +93,7 @@ if "user_prompt" not in st.session_state:
     st.session_state.user_prompt = ""
 
 
+
 # 4 sidebar
 
 with st.sidebar:
@@ -101,6 +118,7 @@ if st.session_state.btn1 == "Add New Defendant":
         st.title("Welcome to Hermany's AI Judge Template_24_Final")
 
         st.session_state.Name = st.text_input("Your Legal Name")
+
         st.session_state.ID = st.text_input("ID")
 
         st.subheader("Current Sentence Need to be Served")
@@ -134,9 +152,9 @@ if st.session_state.btn1 == "Add New Defendant":
 
     if st.session_state.Submit:
 
-        st.write("Hermany is judging your case, please wait patiently.")
-
+        
         if st.session_state.Name == "" or st.session_state.ID == "" or st.session_state.Case == "":
+            st.session_state_Submit = True
             st.error("Please fill in all the required fields.")
 
         elif st.session_state.Penalties == "Year Imprisonment" and st.session_state.Year <= 0.0:
@@ -144,7 +162,6 @@ if st.session_state.btn1 == "Add New Defendant":
 
         else:
             st.success("Thanks for submission, Hermany will judge your case as soon as possible. Please wait patiently.")
-
             st.session_state.rule_prompt = '''
             a. You are fair
             b. You are impartial
@@ -184,17 +201,17 @@ if st.session_state.btn1 == "Add New Defendant":
             Do not use ```json.
             Do not write anything outside the JSON.
             '''
-
-            st.session_state.response = client.chat.completions.create(
-                model = "gpt-4.1",
-                response_format = {"type": "json_object"},
-                messages = [
-                    {
-                        "role": "user",
-                        "content": st.session_state.user_prompt
-                    }
-                ]
-            )
+            with st.spinner("PATIENT!, HERMANY'S JUDGING"):
+                st.session_state.response = client.chat.completions.create(
+                    model = "gpt-4.1",
+                    response_format = {"type": "json_object"},
+                    messages = [
+                        {
+                            "role": "user",
+                            "content": st.session_state.user_prompt
+                        }
+                    ]
+                )
 
             pure_text_JSON = st.session_state.response.choices[0].message.content
 
@@ -231,6 +248,7 @@ if st.session_state.btn1 == "Add New Defendant":
                 st.error("The AI did not give valid JSON.")
                 st.write("This is what the AI gave:")
                 st.write(pure_text_JSON)
+            
 
 
 # 6 search
@@ -247,7 +265,6 @@ if st.session_state.btn2 == "Search by Name or ID":
 
         if st.session_state.search_query:
             search_key = st.session_state.search_query.lower().strip()
-
             if search_key in st.session_state.dictionary:
 
                 record = st.session_state.dictionary[search_key]
