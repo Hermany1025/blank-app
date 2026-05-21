@@ -25,7 +25,7 @@ with st_yled.container(
 ):
     st_yled.title("Hermany's AI Judge")
     st_yled.subheader("Template_24_Final")
-st_yled.write("All Copywrite belonged to Hermany, Chinmany Seimens complany. https://Chinmany_Seimens/Hermanys_AI_Judge_template_24_Final.cn.com")
+    st_yled.write("All Copywrite belonged to Hermany, Chinmany Seimens complany. https://Chinmany_Seimens/Hermanys_AI_Judge_template_24_Final.cn.com")
 st.divider()
 client = OpenAI(
     api_key = st.secrets["OPENAIKEY"]
@@ -117,8 +117,7 @@ if st.session_state.btn1 == "Add New Defendant":
     with st_yled.container(
         background_color = GREEN,
         border_color = "#E4F6B3",
-        padding = "20px",
-        border_radius = "80px"
+        padding = "20px"
     ):
         with st.form("Form"):
             st.title("Welcome to Hermany's AI Judge Template_24_Final")
