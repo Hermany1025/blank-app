@@ -16,6 +16,7 @@ GREEN = "#E4F6B3"
 st_yled.set("button", "background_color", GREEN)
 st_yled.set("write", "font_size", "20px")
 
+
 with st_yled.container(
     background_color = GREEN,
     border_color = "#E4F6B3",
@@ -93,7 +94,6 @@ if "user_prompt" not in st.session_state:
     st.session_state.user_prompt = ""
 
 
-
 # 4 sidebar
 
 with st.sidebar:
@@ -160,6 +160,9 @@ if st.session_state.btn1 == "Add New Defendant":
         elif st.session_state.Penalties == "Year Imprisonment" and st.session_state.Year <= 0.0:
             st.error("If you choose Year Imprisonment, please enter a year bigger than 0.")
 
+        elif st.session_state.Penalties != "Year Imprisonment" and st.session_state.Year > 0.0:
+            st.error("If you did not choose Year Imprisonment, then please don't put any year")
+
         else:
             st.success("Thanks for submission, Hermany will judge your case as soon as possible. Please wait patiently.")
             st.session_state.rule_prompt = '''
@@ -201,20 +204,27 @@ if st.session_state.btn1 == "Add New Defendant":
             Do not use ```json.
             Do not write anything outside the JSON.
             '''
-            with st.spinner("PATIENT!, HERMANY'S JUDGING"):
-                st.session_state.response = client.chat.completions.create(
-                    model = "gpt-4.1",
-                    response_format = {"type": "json_object"},
-                    messages = [
-                        {
-                            "role": "user",
-                            "content": st.session_state.user_prompt
-                        }
-                    ]
-                )
+            try:
+                with st.spinner("PATIENT!, HERMANY'S JUDGING"):
+                    st.session_state.response = client.chat.completions.create(
+                        model = "gpt-4.1",
+                        response_format = {"type": "json_object"},
+                        messages = [
+                            {
+                                "role": "user",
+                                "content": st.session_state.user_prompt
+                            }
+                        ],
+                        timeout = 30
+                    )
+            
+            
 
-            pure_text_JSON = st.session_state.response.choices[0].message.content
 
+                pure_text_JSON = st.session_state.response.choices[0].message.content
+            except Exception as e:
+                st.error(f"Error generating response: {e}")
+                pure_text_JSON = None
             # st.subheader("Pure Text JSON")
             # st.code(pure_text_JSON, language="json")
 
@@ -230,8 +240,6 @@ if st.session_state.btn1 == "Add New Defendant":
                     "Output": st.session_state.Output
                 }
 
-                # stores entry twice, once by name and once with ID
-                # to prevent same ID being put into dictionary, check if ID already exists
                 st.session_state.dictionary[st.session_state.Name.lower()] = defendant_info
                 st.session_state.dictionary[st.session_state.ID.lower()] = defendant_info
 
