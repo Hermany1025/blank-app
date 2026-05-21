@@ -119,7 +119,7 @@ if st.session_state.btn1 == "Add New Defendant":
         border_color = "#E4F6B3",
         padding = "20px"
     ):
-        with st.form("Form"):;
+        with st.form("Form"):
             st.title("Welcome to Hermany's AI Judge Template_24_Final")
 
             st.session_state.Name = st.text_input("Your Legal Name")
