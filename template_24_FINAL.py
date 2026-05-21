@@ -117,7 +117,8 @@ if st.session_state.btn1 == "Add New Defendant":
     with st_yled.container(
         background_color = GREEN,
         border_color = "#E4F6B3",
-        padding = "20px"
+        padding = "20px",
+        border_radius = "80px"
     ):
         with st.form("Form"):
             st.title("Welcome to Hermany's AI Judge Template_24_Final")
