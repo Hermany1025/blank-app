@@ -14,6 +14,7 @@ QUATERNARY= "#FF9500"
 GRAY = "#535353"
 GREEN = "#E4F6B3"
 st_yled.set("button", "background_color", GREEN)
+st_yled.set("form_submit_button", "background_color", GREEN)
 st_yled.set("write", "font_size", "20px")
 
 
@@ -255,7 +256,7 @@ if st.session_state.btn1 == "Add New Defendant":
                     st.write(st.session_state.Output["Result"])
                     
             except:
-                st.error("The AI did not give valid JSON.")
+                st.error("Error Occured During Generating")
                 st.write("This is what the AI gave:")
                 st.write(pure_text_JSON)
             
