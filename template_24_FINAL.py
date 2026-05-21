@@ -114,42 +114,46 @@ if st.session_state.btn1 == "" and st.session_state.btn2 == "":
 # 5 add new defendant
 
 if st.session_state.btn1 == "Add New Defendant":
+    with st_yled.container(
+        background_color = GREEN,
+        border_color = "#E4F6B3",
+        padding = "20px"
+    ):
+        with st.form("Form"):;
+            st.title("Welcome to Hermany's AI Judge Template_24_Final")
 
-    with st.form("Form"):
-        st.title("Welcome to Hermany's AI Judge Template_24_Final")
+            st.session_state.Name = st.text_input("Your Legal Name")
 
-        st.session_state.Name = st.text_input("Your Legal Name")
+            st.session_state.ID = st.text_input("ID")
 
-        st.session_state.ID = st.text_input("ID")
+            st.subheader("Current Sentence Need to be Served")
 
-        st.subheader("Current Sentence Need to be Served")
+            col1, col2 = st.columns(2)
 
-        col1, col2 = st.columns(2)
+            with col1:
+                st.session_state.Penalties = st.radio(
+                    "Penalties",
+                    [
+                        "Nothing(Cannot be Served)",
+                        "Death Penalty",
+                        "Death Reprieve",
+                        "Life Imprisonment",
+                        "Year Imprisonment"
+                    ]
+                )
 
-        with col1:
-            st.session_state.Penalties = st.radio(
-                "Penalties",
-                [
-                    "Nothing(Cannot be Served)",
-                    "Death Penalty",
-                    "Death Reprieve",
-                    "Life Imprisonment",
-                    "Year Imprisonment"
-                ]
-            )
+            with col2:
+                st.session_state.Year = st.number_input(
+                    "Year(if applicable)",
+                    min_value = 0.0,
+                    max_value = 10000.0,
+                    step = 0.5,
+                    value = 0.0
+                )
 
-        with col2:
-            st.session_state.Year = st.number_input(
-                "Year(if applicable)",
-                min_value = 0.0,
-                max_value = 10000.0,
-                step = 0.5,
-                value = 0.0
-            )
+            st.session_state.Case = st.text_area("Case Details If searching for a specific case type")
 
-        st.session_state.Case = st.text_area("Case Details If searching for a specific case type")
-
-        st.session_state.Submit = st.form_submit_button("Submit")
+            st.session_state.Submit = st.form_submit_button("Submit")
 
     if st.session_state.Submit:
 
