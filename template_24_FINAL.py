@@ -129,7 +129,7 @@ if st.session_state.btn1 == "Add New Defendant":
 
             st.session_state.ID = st.text_input("ID", disabled=disabled)
 
-            st.subheader("Current Sentence Need to be Served", disabled=disabled)
+            st.subheader("Current Sentence Need to be Served")
 
             col1, col2 = st.columns(2)
 
