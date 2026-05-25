@@ -215,61 +215,62 @@ if st.session_state.btn1 == "Add New Defendant":
             Do not use ```json.
             Do not write anything outside the JSON.
             '''
-            try:
-                with st.spinner("PATIENT!, HERMANY'S JUDGING"):
-                    st.session_state.response = client.chat.completions.create(
-                        model = "gpt-4.1",
-                        response_format = {"type": "json_object"},
-                        messages = [
-                            {
-                                "role": "user",
-                                "content": st.session_state.user_prompt
-                            }
-                        ],
-                        timeout = 30
-                    )
+            # try:
+            #     with st.spinner("PATIENT!, HERMANY'S JUDGING"):
+            #         st.session_state.response = client.chat.completions.create(
+            #             model = "gpt-4.1",
+            #             response_format = {"type": "json_object"},
+            #             messages = [
+            #                 {
+            #                     "role": "user",
+            #                     "content": st.session_state.user_prompt
+            #                 }
+            #             ],
+            #             timeout = 30
+            #         )
             
             
 
 
-                pure_text_JSON = st.session_state.response.choices[0].message.content
-            except Exception as e:
-                st.error(f"Error generating response: {e}")
-                pure_text_JSON = None
-            # st.subheader("Pure Text JSON")
-            # st.code(pure_text_JSON, language="json")
+            #     pure_text_JSON = st.session_state.response.choices[0].message.content
+            # except Exception as e:
+            #     st.error(f"Error generating response: {e}")
+            #     pure_text_JSON = None
+            # # st.subheader("Pure Text JSON")
+            # # st.code(pure_text_JSON, language="json")
 
             try:
-                st.session_state.Output = json.loads(pure_text_JSON)
+            #     st.session_state.Output = json.loads(pure_text_JSON)
 
-                defendant_info = {
-                    "Name": st.session_state.Name,
-                    "ID": st.session_state.ID,
-                    "Penalty": st.session_state.Penalties,
-                    "Year": st.session_state.Year,
-                    "Case": st.session_state.Case,
-                    "Output": st.session_state.Output
-                }
+            #     defendant_info = {
+            #         "Name": st.session_state.Name,
+            #         "ID": st.session_state.ID,
+            #         "Penalty": st.session_state.Penalties,
+            #         "Year": st.session_state.Year,
+            #         "Case": st.session_state.Case,
+            #         "Output": st.session_state.Output
+            #     }
 
-                st.session_state.dictionary[st.session_state.Name.lower()] = defendant_info
-                st.session_state.dictionary[st.session_state.ID.lower()] = defendant_info
+            #     st.session_state.dictionary[st.session_state.Name.lower()] = defendant_info
+            #     st.session_state.dictionary[st.session_state.ID.lower()] = defendant_info
 
                 col1, col2 = st.columns(2)
 
                 with col1:
                     st.subheader("Why do you have the result")
-                    st.write(st.session_state.Output["Why do you have the result"])
-                    
+                    # st.write(st.session_state.Output["Why do you have the result"])
+                    st.write("www")
 
                 with col2:
                     st.subheader("Result")
-                    st.write(st.session_state.Output["Result"])
+                    # st.write(st.session_state.Output["Result"])
+                    st.write("www")
                 st.session_state.form_submitted = True
                 st.rerun()        
             except:
                 st.error("Error Occured During Generating")
-                st.write("This is what the AI gave:")
-                st.write(str(pure_text_JSON))
+                # st.write("This is what the AI gave:")
+                # st.write(str(pure_text_JSON))
             if st.button("Add a New One"):
                 st.session_state.form_submitted = False
                 st.rerun()
