@@ -174,8 +174,7 @@ if st.session_state.btn1 == "Add New Defendant":
             st.error("If you did not choose Year Imprisonment, then please don't put any year")
 
         else:
-            st.session_state.form_submitted = True
-            st.rerun()
+            
             st.success("Thanks for submission, Hermany will judge your case as soon as possible. Please wait patiently.")
             st.session_state.rule_prompt = '''
             a. You are fair
@@ -265,7 +264,8 @@ if st.session_state.btn1 == "Add New Defendant":
                 with col2:
                     st.subheader("Result")
                     st.write(st.session_state.Output["Result"])
-                    
+                st.session_state.form_submitted = True
+                st.rerun()        
             except:
                 st.error("Error Occured During Generating")
                 st.write("This is what the AI gave:")
