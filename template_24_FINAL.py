@@ -196,6 +196,8 @@ if st.session_state.btn1 == "Add New Defendant":
                     "This form was already submitted. Please do not directly edit it. "
                     "Click 'Clear form / Add another defendant' to add a new defendant."
                 )
+                st.session_state.form_submitted = True
+                st.session_state.clear_required = True
             else:
                 st.warning("This defendant was already submitted.")
 
@@ -223,6 +225,8 @@ if st.session_state.btn1 == "Add New Defendant":
             }
             st.session_state.submitted_snapshot = current_form_data
             st.session_state.form_submitted = True
+            st.session_state.clear_required = True
+            st.session_state.edit_error_message = ""
             st.success("Thanks for submission, Hermany will judge your case as soon as possible. Please wait patiently.")
             st.session_state.rule_prompt = '''
             a. You are fair
@@ -317,14 +321,16 @@ if st.session_state.btn1 == "Add New Defendant":
                 st.error("Error Occured During Generating")
                 # st.write("This is what the AI gave:")
                 # st.write(str(pure_text_JSON))
-            if st.session_state.form_submitted or st.session_state.edit_error:
-                if st.button("Clear form / Add another defendant"):
+            if st.session_state.edit_error_message:
+                st.error(st.session_state.edit_error_message)
+            if st.session_state.clear_required:
+                if st.button("Clear form / Add another defendant", key="clear_defendant_button"):
                     st.session_state.form_submitted = False
                     st.session_state.submitted_snapshot = None
-                    st.session_state.edit_error = False
+                    st.session_state.edit_error_message = ""
+                    st.session_state.clear_required = False
 
-                    # This creates fresh widget keys.
-                    # Do NOT manually set st.session_state[ID_key] = ""
+                    # Creates a fresh empty form
                     st.session_state.form_version += 1
 
                     st.rerun()
