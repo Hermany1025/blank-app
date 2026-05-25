@@ -42,6 +42,12 @@ if "form_submitted" not in st.session_state:
 if "submitted_snapshot" not in st.session_state:
     st.session_state.submitted_snapshot = None
 
+if "edit_error_message" not in st.session_state:
+    st.session_state.edit_error_message = ""
+
+if "clear_required" not in st.session_state:
+    st.session_state.clear_required = False
+
 if "form_version" not in st.session_state:
     st.session_state.form_version = 0
 
@@ -321,8 +327,6 @@ if st.session_state.btn1 == "Add New Defendant":
                 st.error("Error Occured During Generating")
                 # st.write("This is what the AI gave:")
                 # st.write(str(pure_text_JSON))
-            if st.session_state.edit_error_message:
-                st.error(st.session_state.edit_error_message)
             if st.session_state.clear_required:
                 if st.button("Clear form / Add another defendant", key="clear_defendant_button"):
                     st.session_state.form_submitted = False
