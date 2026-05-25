@@ -317,13 +317,12 @@ if st.session_state.btn1 == "Add New Defendant":
                 st.error("Error Occured During Generating")
                 # st.write("This is what the AI gave:")
                 # st.write(str(pure_text_JSON))
-            if st.session_state.form_submitted:
+            if st.session_state.form_submitted or st.session_state.edit_error:
                 st.button(
                 "Clear form / Add another defendant",
-                on_click=clear_form_for_new_defendant
+                n_click=clear_form_for_new_defendant
                 )
-            st.subheader("Saved Defendants")
-            st.write(st.session_state.defendants)
+            
 
 # 6 search
 
