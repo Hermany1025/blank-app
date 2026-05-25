@@ -177,7 +177,7 @@ if st.session_state.btn1 == "Add New Defendant":
                     key=Year_key
                 )
 
-            st.session_state.Case = st.text_area("Case Details If searching for a specific case type", Case = Case_key)
+            st.session_state.Case = st.text_area("Case Details If searching for a specific case type", key = Case_key)
 
             st.session_state.Submit = st.form_submit_button("Submit")
 
