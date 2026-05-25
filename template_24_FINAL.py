@@ -32,7 +32,8 @@ client = OpenAI(
 )
 
 # 3 session state
-
+if "form_submitted" not in st.session_state:
+    st.session_state.form_submitted = False
 if "Output" not in st.session_state:
     st.session_state.Output = {}
 
@@ -113,6 +114,8 @@ if st.session_state.btn1 == "" and st.session_state.btn2 == "":
 
 # 5 add new defendant
 
+disabled = st.session_state.form_submitted
+
 if st.session_state.btn1 == "Add New Defendant":
     with st_yled.container(
         background_color = GREEN,
@@ -122,11 +125,11 @@ if st.session_state.btn1 == "Add New Defendant":
         with st.form("Form"):
             st.title("Welcome to Hermany's AI Judge Template_24_Final")
 
-            st.session_state.Name = st.text_input("Your Legal Name")
+            st.session_state.Name = st.text_input("Your Legal Name", disabled=disabled)
 
-            st.session_state.ID = st.text_input("ID")
+            st.session_state.ID = st.text_input("ID", disabled=disabled)
 
-            st.subheader("Current Sentence Need to be Served")
+            st.subheader("Current Sentence Need to be Served", disabled=disabled)
 
             col1, col2 = st.columns(2)
 
@@ -139,7 +142,8 @@ if st.session_state.btn1 == "Add New Defendant":
                         "Death Reprieve",
                         "Life Imprisonment",
                         "Year Imprisonment"
-                    ]
+                    ], 
+                    disabled=disabled
                 )
 
             with col2:
@@ -148,12 +152,13 @@ if st.session_state.btn1 == "Add New Defendant":
                     min_value = 0.0,
                     max_value = 10000.0,
                     step = 0.5,
-                    value = 0.0
+                    value = 0.0, 
+                    disabled=disabled
                 )
 
-            st.session_state.Case = st.text_area("Case Details If searching for a specific case type")
+            st.session_state.Case = st.text_area("Case Details If searching for a specific case type", disabled=disabled)
 
-            st.session_state.Submit = st.form_submit_button("Submit")
+            st.session_state.Submit = st.form_submit_button("Submit", disabled=disabled)
 
     if st.session_state.Submit:
 
@@ -169,6 +174,8 @@ if st.session_state.btn1 == "Add New Defendant":
             st.error("If you did not choose Year Imprisonment, then please don't put any year")
 
         else:
+            st.session_state.form_submitted = True
+            st.rerun()
             st.success("Thanks for submission, Hermany will judge your case as soon as possible. Please wait patiently.")
             st.session_state.rule_prompt = '''
             a. You are fair
@@ -263,7 +270,9 @@ if st.session_state.btn1 == "Add New Defendant":
                 st.error("Error Occured During Generating")
                 st.write("This is what the AI gave:")
                 st.write(str(pure_text_JSON))
-            
+            if st.button("Add a New One"):
+                st.session_state.form_submitted = False
+                st.rerun()
 
 
 # 6 search
