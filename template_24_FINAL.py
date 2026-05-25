@@ -168,8 +168,6 @@ if st.session_state.btn1 == "Add New Defendant":
         elif st.session_state.Penalties != "Year Imprisonment" and st.session_state.Year > 0.0:
             st.error("If you did not choose Year Imprisonment, then please don't put any year")
 
-        elif st.session_state.Penalties == "Nothing(Cannot be served)":
-            st.error("Give a Penalty Type")
         else:
             st.success("Thanks for submission, Hermany will judge your case as soon as possible. Please wait patiently.")
             st.session_state.rule_prompt = '''
