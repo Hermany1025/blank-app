@@ -33,6 +33,18 @@ client = OpenAI(
 
 # 3 session state
 
+if "defendants" not in st.session_state:
+    st.session_state.defendants = {}
+
+if "form_submitted" not in st.session_state:
+    st.session_state.form_submitted = False
+
+if "submitted_snapshot" not in st.session_state:
+    st.session_state.submitted_snapshot = None
+
+if "form_version" not in st.session_state:
+    st.session_state.form_version = 0
+
 if "Output" not in st.session_state:
     st.session_state.Output = {}
 
@@ -94,7 +106,17 @@ if "Example" not in st.session_state:
 if "user_prompt" not in st.session_state:
     st.session_state.user_prompt = ""
 
+def clear_form_for_new_defendant():
+    st.session_state.form_submitted = False
+    st.session_state.submitted_snapshot = None
+    st.session_state.form_version += 1
+    st.rerun()
 
+Name_key = f"defendant_Name_{st.session_state.form_version}"
+ID_key = f"defendant_ID_{st.session_state.form_version}"
+Penalties_key = f"Penalties_charge_{st.session_state.form_version}"
+Year_key = f"Year_age_{st.session_state.form_version}"
+Case_key = f"Case_id_{st.session_state.form_version}"
 # 4 sidebar
 
 with st.sidebar:
@@ -124,9 +146,9 @@ if st.session_state.btn1 == "Add New Defendant":
         with st.form("Form"):
             st.title("Welcome to Hermany's AI Judge Template_24_Final")
 
-            st.session_state.Name = st.text_input("Your Legal Name")
+            st.session_state.Name = st.text_input("Your Legal Name", key=Name_key)
 
-            st.session_state.ID = st.text_input("ID")
+            st.session_state.ID = st.text_input("ID", key=ID_key)
 
             st.subheader("Current Sentence Need to be Served")
 
@@ -141,7 +163,8 @@ if st.session_state.btn1 == "Add New Defendant":
                         "Death Reprieve",
                         "Life Imprisonment",
                         "Year Imprisonment"
-                    ]
+                    ],
+                    key = Penalties_key
                 )
 
             with col2:
@@ -150,16 +173,33 @@ if st.session_state.btn1 == "Add New Defendant":
                     min_value = 0.0,
                     max_value = 10000.0,
                     step = 0.5,
-                    value = 0.0
+                    value = 0.0,
+                    key=Year_key
                 )
 
-            st.session_state.Case = st.text_area("Case Details If searching for a specific case type")
+            st.session_state.Case = st.text_area("Case Details If searching for a specific case type" Case = Case_key)
 
             st.session_state.Submit = st.form_submit_button("Submit")
 
     if st.session_state.Submit:
         st.session_state.ID = st.session_state.ID.strip()
-        
+        current_form_data = {
+        "Name": st.session_state.Name.strip(),
+        "ID": st.session_state.ID.strip(),
+        "Penalties": st.session_state.Penalties.strip(),
+        "Year": st.session_state.Year,
+        "Case": st.session_state.Case.strip()
+        }
+        if st.session_state.form_submitted:
+            if current_form_data != st.session_state.submitted_snapshot:
+                st.error(
+                    "This form was already submitted. Please do not directly edit it. "
+                    "Click 'Clear form / Add another defendant' to add a new defendant."
+                )
+            else:
+                st.warning("This defendant was already submitted.")
+
+
         if st.session_state.Name == "" or st.session_state.ID == "" or st.session_state.Case == "":
             st.session_state_Submit = True
             st.error("Please fill in all the required fields.")
@@ -176,8 +216,13 @@ if st.session_state.btn1 == "Add New Defendant":
         else:
             st.session_state.dictionary[st.session_state.ID] = {
             "Name": st.session_state.Name,
-            "ID": st.session_state.ID
+            "ID": st.session_state.ID,
+            "Penalties": st.session_state.Penalties,
+            "Year": st.session_state.Year,
+            "Case": st.session_state.Case
             }
+            st.session_state.submitted_snapshot = current_form_data
+            st.session_state.form_submitted = True
             st.success("Thanks for submission, Hermany will judge your case as soon as possible. Please wait patiently.")
             st.session_state.rule_prompt = '''
             a. You are fair
@@ -272,10 +317,13 @@ if st.session_state.btn1 == "Add New Defendant":
                 st.error("Error Occured During Generating")
                 # st.write("This is what the AI gave:")
                 # st.write(str(pure_text_JSON))
-            if st.button("Add a New One"):
-                st.session_state.form_submitted = False
-                st.rerun()
-
+            if st.session_state.form_submitted:
+                st.button(
+                "Clear form / Add another defendant",
+                on_click=clear_form_for_new_defendant
+                )
+            st.subheader("Saved Defendants")
+            st.write(st.session_state.defendants)
 
 # 6 search
 
