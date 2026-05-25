@@ -158,7 +158,7 @@ if st.session_state.btn1 == "Add New Defendant":
             st.session_state.Submit = st.form_submit_button("Submit")
 
     if st.session_state.Submit:
-
+        st.session_state.ID = st.session_state.ID.strip()
         
         if st.session_state.Name == "" or st.session_state.ID == "" or st.session_state.Case == "":
             st.session_state_Submit = True
@@ -170,8 +170,14 @@ if st.session_state.btn1 == "Add New Defendant":
         elif st.session_state.Penalties != "Year Imprisonment" and st.session_state.Year > 0.0:
             st.error("If you did not choose Year Imprisonment, then please don't put any year")
 
+        elif st.session_state.ID in st.session_state.dictionary:
+            st.error(f"ID {st.session_state.ID} has already been used. Enter a new ID")
+
         else:
-            
+            st.session_state.dictionary[st.session_state.ID] = {
+            "Name": st.session_state.Name,
+            "ID": st.session_state.ID
+            }
             st.success("Thanks for submission, Hermany will judge your case as soon as possible. Please wait patiently.")
             st.session_state.rule_prompt = '''
             a. You are fair
