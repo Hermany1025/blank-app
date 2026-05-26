@@ -44,7 +44,7 @@ st.markdown(
     [data-testid="stForm"],
     [data-testid="stVerticalBlockBorderWrapper"] {
         background-color: #E4F6B3;
-        border: 2px solid #e2faa0;
+        border: 2px solid #009f13;
         border-radius: 12px;
         padding: 16px;
     }
@@ -55,7 +55,7 @@ st.markdown(
     select {
         background-color: #E4F6B3 !important;
         color: #000000 !important;
-        border: 2px solid #e2faa0 !important;
+        border: 2px solid #009f13 !important;
         border-radius: 12px !important;
     }
 
@@ -71,14 +71,14 @@ st.markdown(
     div[data-testid="stFormSubmitButton"] > button {
         background-color: #E4F6B3;
         color: #000000;
-        border: 2px solid #e2faa0;
+        border: 2px solid #009f13;
         border-radius: 10px;
         font-weight: bold;
     }
 
     div.stButton > button:hover,
     div[data-testid="stFormSubmitButton"] > button:hover {
-        background-color: #e2faa0;
+        background-color: #009f13;
         color: #000000;
         border: 2px solid #000000;
     }
@@ -92,7 +92,7 @@ st.markdown(
     [data-baseweb="input"],
     [data-baseweb="textarea"],
     [data-baseweb="select"] {
-        border-color: #e2faa0 !important;
+        border-color: #009f13 !important;
         border-radius: 12px !important;
     }
     </style>
@@ -220,48 +220,43 @@ if st.session_state.btn1 == "" and st.session_state.btn2 == "":
 
 
 if st.session_state.btn1 == "Add New Defendant":
-    with st_yled.container(
-        background_color = GREEN,
-        border_color = "#E4F6B3",
-        padding = "20px"
-    ):
-        with st.form("Form"):
-            st.title("Welcome to Hermany's AI Judge Template_24_Final")
+    with st.form("Form"):
+        st.title("Welcome to Hermany's AI Judge Template_24_Final")
 
-            st.session_state.Name = st.text_input("Your Legal Name", key=Name_key)
+        st.session_state.Name = st.text_input("Your Legal Name", key=Name_key)
 
-            st.session_state.ID = st.text_input("ID", key=ID_key)
+        st.session_state.ID = st.text_input("ID", key=ID_key)
 
-            st.subheader("Current Sentence Need to be Served")
+        st.subheader("Current Sentence Need to be Served")
 
-            col1, col2 = st.columns(2)
+        col1, col2 = st.columns(2)
 
-            with col1:
-                st.session_state.Penalties = st.radio(
-                    "Penalties",
-                    [
-                        "Nothing(Cannot be Served)",
-                        "Death Penalty",
-                        "Death Reprieve",
-                        "Life Imprisonment",
-                        "Year Imprisonment"
-                    ],
-                    key = Penalties_key
-                )
+        with col1:
+            st.session_state.Penalties = st.radio(
+                "Penalties",
+                [
+                    "Nothing(Cannot be Served)",
+                    "Death Penalty",
+                    "Death Reprieve",
+                    "Life Imprisonment",
+                    "Year Imprisonment"
+                ],
+                key = Penalties_key
+            )
 
-            with col2:
-                st.session_state.Year = st.number_input(
-                    "Year(if applicable)",
-                    min_value = 0.0,
-                    max_value = 10000.0,
-                    step = 0.5,
-                    value = 0.0,
-                    key=Year_key
-                )
+        with col2:
+            st.session_state.Year = st.number_input(
+                "Year(if applicable)",
+                min_value = 0.0,
+                max_value = 10000.0,
+                step = 0.5,
+                value = 0.0,
+                key=Year_key
+            )
 
-            st.session_state.Case = st.text_area("Case Details If searching for a specific case type", key = Case_key)
+        st.session_state.Case = st.text_area("Case Details If searching for a specific case type", key = Case_key)
 
-            st.session_state.Submit = st.form_submit_button("Submit")
+        st.session_state.Submit = st.form_submit_button("Submit")
 
     if st.session_state.Submit:
         st.session_state.ID = st.session_state.ID.strip()
