@@ -275,9 +275,7 @@ if st.session_state.btn1 == "Add New Defendant":
                 )
                 st.session_state.form_submitted = True
                 st.session_state.clear_required = True
-            else:
-                st.warning("This defendant was already submitted.")
-
+            
 
         if st.session_state.Name == "" or st.session_state.ID == "" or st.session_state.Case == "" or st.session_state.Penalties == "Nothing(Cannot be Served)":
             st.session_state_Submit = True
