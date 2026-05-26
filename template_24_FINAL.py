@@ -6,26 +6,118 @@ from openai import OpenAI
 
 st_yled.init()
 # 2
-# GLOBAL CONTAINER
-PRIMARY = "#E42121"
-SECONDARY = "#3567FF"
-TERTIARY= "#FFF700"
-QUATERNARY= "#FF9500"
-GRAY = "#535353"
-GREEN = "#E4F6B3"
-st_yled.set("button", "background_color", GREEN)
-st_yled.set("form_submit_button", "background_color", GREEN)
-st_yled.set("write", "font_size", "20px")
+# # GLOBAL CONTAINER
+# PRIMARY = "#E42121"
+# SECONDARY = "#3567FF"
+# TERTIARY= "#FFF700"
+# QUATERNARY= "#FF9500"
+# GRAY = "#535353"
+# GREEN = "#E4F6B3"
+# st_yled.set("button", "background_color", GREEN)
+# st_yled.set("form_submit_button", "background_color", GREEN)
+# st_yled.set("write", "font_size", "20px")
 
 
-with st_yled.container(
-    background_color = GREEN,
-    border_color = "#E4F6B3",
-    padding = "20px"
-):
-    st_yled.title("Hermany's AI Judge")
-    st_yled.subheader("Template_24_Final")
-    st_yled.write("All Copywrite belonged to Hermany, Chinmany Seimens complany. https://Chinmany_Seimens/Hermanys_AI_Judge_template_24_Final.cn.com")
+# with st_yled.container(
+#     background_color = GREEN,
+#     border_color = "#E4F6B3",
+#     padding = "20px"
+# ):
+st.markdown(
+    """
+    <style>
+    /* Whole app */
+    .stApp {
+        background-color: #E4F6B3;
+        color: #ffffff;
+    }
+
+    /* Main page background */
+    [data-testid="stAppViewContainer"] {
+        background-color: #E4F6B3;
+    }
+
+    /* Header */
+    [data-testid="stHeader"] {
+        background-color: #E4F6B3;
+    }
+
+    /* Sidebar */
+    [data-testid="stSidebar"] {
+        background-color: #E4F6B3;
+    }
+
+    [data-testid="stSidebar"] * {
+        color: #ffffff !important;
+    }
+
+    /* Text */
+    h1, h2, h3, h4, h5, h6, p, label, span, div {
+        color: #ffffff !important;
+    }
+
+    /* Forms and containers */
+    [data-testid="stForm"],
+    [data-testid="stVerticalBlockBorderWrapper"] {
+        background-color: #E4F6B3;
+        border: 2px solid #e2faa0;
+        border-radius: 12px;
+        padding: 16px;
+    }
+
+    /* Inputs */
+    input,
+    textarea,
+    select {
+        background-color: #E4F6B3 !important;
+        color: #ffffff !important;
+        border: 2px solid #e2faa0 !important;
+        border-radius: 12px !important;
+    }
+
+    /* Input placeholder text */
+    input::placeholder,
+    textarea::placeholder {
+        color: #ffffff !important;
+        opacity: 0.8;
+    }
+
+    /* Buttons */
+    div.stButton > button,
+    div[data-testid="stFormSubmitButton"] > button {
+        background-color: #E4F6B3;
+        color: #ffffff;
+        border: 2px solid #e2faa0;
+        border-radius: 10px;
+        font-weight: bold;
+    }
+
+    div.stButton > button:hover,
+    div[data-testid="stFormSubmitButton"] > button:hover {
+        background-color: #e2faa0;
+        color: #ffffff;
+        border: 2px solid #ffffff;
+    }
+
+    /* Links */
+    a {
+        color: #ffffff !important;
+    }
+
+    /* Widget borders */
+    [data-baseweb="input"],
+    [data-baseweb="textarea"],
+    [data-baseweb="select"] {
+        border-color: #e2faa0 !important;
+        border-radius: 12px !important;
+    }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
+st_yled.title("Hermany's AI Judge")
+st_yled.subheader("Template_24_Final")
+st_yled.write("All Copywrite belonged to Hermany, Chinmany Seimens complany. https://Chinmany_Seimens/Hermanys_AI_Judge_template_24_Final.cn.com")
 st.divider()
 client = OpenAI(
     api_key = st.secrets["OPENAIKEY"]
