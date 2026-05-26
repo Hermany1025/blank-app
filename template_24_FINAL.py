@@ -6,30 +6,14 @@ from openai import OpenAI
 
 st_yled.init()
 # 2
-# # GLOBAL CONTAINER
-# PRIMARY = "#E42121"
-# SECONDARY = "#3567FF"
-# TERTIARY= "#FFF700"
-# QUATERNARY= "#FF9500"
-# GRAY = "#535353"
-# GREEN = "#E4F6B3"
-# st_yled.set("button", "background_color", GREEN)
-# st_yled.set("form_submit_button", "background_color", GREEN)
-# st_yled.set("write", "font_size", "20px")
 
-
-# with st_yled.container(
-#     background_color = GREEN,
-#     border_color = "#E4F6B3",
-#     padding = "20px"
-# ):
 st.markdown(
     """
     <style>
     /* Whole app */
     .stApp {
         background-color: #E4F6B3;
-        color: #ffffff;
+        color: #000000;
     }
 
     /* Main page background */
@@ -48,12 +32,12 @@ st.markdown(
     }
 
     [data-testid="stSidebar"] * {
-        color: #ffffff !important;
+        color: #000000 !important;
     }
 
     /* Text */
     h1, h2, h3, h4, h5, h6, p, label, span, div {
-        color: #ffffff !important;
+        color: #000000 !important;
     }
 
     /* Forms and containers */
@@ -70,7 +54,7 @@ st.markdown(
     textarea,
     select {
         background-color: #E4F6B3 !important;
-        color: #ffffff !important;
+        color: #000000 !important;
         border: 2px solid #e2faa0 !important;
         border-radius: 12px !important;
     }
@@ -78,7 +62,7 @@ st.markdown(
     /* Input placeholder text */
     input::placeholder,
     textarea::placeholder {
-        color: #ffffff !important;
+        color: #000000 !important;
         opacity: 0.8;
     }
 
@@ -86,7 +70,7 @@ st.markdown(
     div.stButton > button,
     div[data-testid="stFormSubmitButton"] > button {
         background-color: #E4F6B3;
-        color: #ffffff;
+        color: #000000;
         border: 2px solid #e2faa0;
         border-radius: 10px;
         font-weight: bold;
@@ -95,13 +79,13 @@ st.markdown(
     div.stButton > button:hover,
     div[data-testid="stFormSubmitButton"] > button:hover {
         background-color: #e2faa0;
-        color: #ffffff;
-        border: 2px solid #ffffff;
+        color: #000000;
+        border: 2px solid #000000;
     }
 
     /* Links */
     a {
-        color: #ffffff !important;
+        color: #000000 !important;
     }
 
     /* Widget borders */
