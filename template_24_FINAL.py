@@ -393,3 +393,8 @@ if st.session_state.btn2 == "Search by Name or ID":
 
             else:
                 st.error("No results found for the given Name or ID.")
+
+# Whole code was revised by ChatGPT, But the structure was created by me
+# ID Duplication Error(Fixed) have ChatGPT associated
+# Jason help me with timeout and st.spinner, but Jason use AI to associate him.
+# AI also help me with config.toml, theme and st.markdown when styling my app.
