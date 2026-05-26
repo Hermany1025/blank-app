@@ -170,17 +170,7 @@ if "Example" not in st.session_state:
 if "user_prompt" not in st.session_state:
     st.session_state.user_prompt = ""
 
-def clear_form_for_new_defendant():
-    st.session_state.form_submitted = False
-    st.session_state.submitted_snapshot = None
-    st.session_state.form_version += 1
-    st.rerun()
 
-Name_key = f"defendant_Name_{st.session_state.form_version}"
-ID_key = f"defendant_ID_{st.session_state.form_version}"
-Penalties_key = f"Penalties_charge_{st.session_state.form_version}"
-Year_key = f"Year_age_{st.session_state.form_version}"
-Case_key = f"Case_id_{st.session_state.form_version}"
 # 4 sidebar
 
 with st.sidebar:
@@ -205,9 +195,9 @@ if st.session_state.btn1 == "Add New Defendant":
     with st.form("Form"):
         st.title("Welcome to Hermany's AI Judge Template_24_Final")
 
-        st.session_state.Name = st.text_input("Your Legal Name", key=Name_key)
+        st.session_state.Name = st.text_input("Your Legal Name")
 
-        st.session_state.ID = st.text_input("ID", key=ID_key)
+        st.session_state.ID = st.text_input("ID")
 
         st.subheader("Current Sentence Need to be Served")
 
@@ -222,8 +212,7 @@ if st.session_state.btn1 == "Add New Defendant":
                     "Death Reprieve",
                     "Life Imprisonment",
                     "Year Imprisonment"
-                ],
-                key = Penalties_key
+                ]
             )
 
         with col2:
@@ -232,11 +221,10 @@ if st.session_state.btn1 == "Add New Defendant":
                 min_value = 0.0,
                 max_value = 10000.0,
                 step = 0.5,
-                value = 0.0,
-                key=Year_key
+                value = 0.0
             )
 
-        st.session_state.Case = st.text_area("Case Details If searching for a specific case type", key = Case_key)
+        st.session_state.Case = st.text_area("Case Details If searching for a specific case type")
 
         st.session_state.Submit = st.form_submit_button("Submit")
 
